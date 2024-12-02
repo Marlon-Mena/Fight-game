@@ -17,6 +17,10 @@ void jogo();
 void rank();
 void menu();
 
+
+// Variaveis globais!!
+int win = 0, dead = 0;
+
 //-----------------------------------------------
 
 // Function that creates a random attack, with
@@ -60,7 +64,7 @@ int cura() {
 // Game function
 // the fight takes place in this code
 void jogo() {
-    int character = 100, bot = 100, contador = 2, win = 0, dead = 0, total = 0;
+    int character = 100, bot = 100, contador = 2;
 
     printf("\n\n------------------\n");
     printf("! Start the game !");
@@ -192,11 +196,10 @@ void rank() {
                    "|                 |\n"
                    "|   WIN = %d       |\n"
                    "|   DEAD = %d      |\n"
-                   "|   TOTAL = %d     |\n"
                    "|                 |\n"
                    "|   2 = EXIT      |\n"
                    " -----------------\n"
-                   "OPTION: ");
+                   "OPTION: ", win, dead);
             scanf("%d", &option);
 
             break;
