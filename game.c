@@ -5,15 +5,15 @@
 // Função auxiliar para garantir que o usuário digite apenas números inteiros
 int ler_inteiro() {
     int valor;
+
     while (scanf("%d", &valor) != 1) {  // Verifica se a leitura foi bem-sucedida
-        while(getchar() != '\n');  // Limpa o buffer de entrada
+        while (getchar() != '\n');  // Limpa o buffer de entrada
         printf("Entrada inválida! Por favor, digite um número inteiro: ");
     }
     return valor;
 }
 
-
-// Function prototypes
+// Protótipos das funções
 int random_ataque1();
 int random_ataque2();
 int random_ataque3();
@@ -28,14 +28,12 @@ void jogo();
 void rank();
 void menu();
 
-
-// Variaveis globais!!
+// Variáveis globais
 int win = 0, dead = 0;
 
 //-----------------------------------------------
 
-// Função para ataques aleatórios e cura (sem mudanças)
-
+// Funções para ataques aleatórios e cura
 int random_ataque1() {
     return rand() % 10 + 5;
 }
@@ -71,95 +69,83 @@ int cura() {
 
 // Função de Jogo com verificação de entradas
 void jogo() {
-    int character = 100, bot = 100, contador = 2;
+    int personagem = 100, bot = 100, contador = 2;
 
     printf("\n\n------------------\n");
-    printf("! Start the game !\n");
+    printf("! Comece o jogo !\n");
     printf("------------------\n\n\n\n");
 
-    while (character > 0 && bot > 0) {
-        if (character > 150 && bot > 150) {
+    while (personagem > 0 && bot > 0) {
+        if (personagem > 150 && bot > 150) {
             printf("\n\n  -----------------------------------------\n");
-            printf("| Oops... your life is already at the limit. |\n");
-            printf("| Oops... your life is already at the limit. |\n");
-            printf("| Oops... your life is already at the limit. |\n");
-            printf("| Oops... your life is already at the limit. |\n");
+            printf("| Oops... sua vida já está no limite. |\n");
+            printf("| Oops... sua vida já está no limite. |\n");
+            printf("| Oops... sua vida já está no limite. |\n");
+            printf("| Oops... sua vida já está no limite. |\n");
             printf("  -----------------------------------------\n\n");
             jogo();
         } else {
-            printf("STATISTICS:\n");
-            printf("Your health is at %d, while the enemy's health is at %d \n\n", character, bot);
-            printf("1 == Attack with the KNIFE\n");
-            printf("2 == Attack with the GUN\n");
-            printf("3 == Attack with the HAMMER\n\n");
-            printf("4 == Healing potion\n\n");
+            printf("ESTATÍSTICAS:\n");
+            printf("Sua vida está em %d, enquanto a vida do inimigo está em %d \n\n", personagem, bot);
+            printf("1 == Ataque com a FACA\n");
+            printf("2 == Ataque com o REVÓLVER\n");
+            printf("3 == Ataque com o MARTELO\n\n");
+            printf("4 == Poção de cura\n\n");
 
-            printf("Choose: ");
-            int escolha = ler_inteiro();  // Usando a função de leitura para validar a entrada
+            printf("Escolha: ");
+            int escolha = ler_inteiro();
 
             switch (escolha) {
                 case 1:
-                    printf("\n--You managed to stab him a few times!--\n\n");
+                    printf("\n--Você conseguiu esfaqueá-lo algumas vezes!--\n\n");
                     bot = bot - faca();
-                    character = character - random_ataque1();
+                    personagem = personagem - random_ataque1();
                     if (bot <= 0) {
-                        printf("!--WIN--!\n\n");
-                        win = win = 1;
-                        for (int i = 0; i <= 10; i++) {
-                            menu();
-                        }
-                    } else if (character <= 0) {
-                        printf("!--DEAD--!\n\n");
+                        printf("!--VITÓRIA--!\n\n");
+                        win = win + 1;
+                        menu();
+                    } else if (personagem <= 0) {
+                        printf("!--DERROTA--!\n\n");
                         dead = dead + 1;
-                        for (int i = 0; i <= 10; i++) {
-                            menu();
-                        }
+                        menu();
                     }
                     break;
 
                 case 2:
-                    printf("\n--You managed to shoot him a few times!--\n\n");
+                    printf("\n--Você conseguiu atirar nele algumas vezes!--\n\n");
                     bot = bot - revolver();
-                    character = character - random_ataque2();
+                    personagem = personagem - random_ataque2();
                     if (bot <= 0) {
-                        printf("!--WIN--!\n\n");
+                        printf("!--VITÓRIA--!\n\n");
                         win = win + 1;
-                        for (int i = 0; i <= 10; i++) {
-                            menu();
-                        }
-                    } else if (character <= 0) {
-                        printf("!--DEAD--!\n\n");
+                        menu();
+                    } else if (personagem <= 0) {
+                        printf("!--DERROTA--!\n\n");
                         dead = dead + 1;
-                        for (int i = 0; i <= 10; i++) {
-                            menu();
-                        }
+                        menu();
                     }
                     break;
 
                 case 3:
-                    printf("\n--You managed to hit him with the hammer!--\n\n");
+                    printf("\n--Você conseguiu acertá-lo com o martelo!--\n\n");
                     bot = bot - marreta();
-                    character = character - random_ataque3();
+                    personagem = personagem - random_ataque3();
                     if (bot <= 0) {
-                        printf("!--WIN--!\n\n");
+                        printf("!--VITÓRIA--!\n\n");
                         win = win + 1;
-                        for (int i = 0; i <= 10; i++) {
-                            menu();
-                        }
-                    } else if (character <= 0) {
-                        printf("!--DEAD--!\n\n");
+                        menu();
+                    } else if (personagem <= 0) {
+                        printf("!--DERROTA--!\n\n");
                         dead = dead + 1;
-                        for (int i = 0; i <= 10; i++) {
-                            menu();
-                        }
+                        menu();
                     }
                     break;
 
                 case 4:
                     if (contador > 0) {
-                        printf("\n--You managed to heal yourself--\n\n");
+                        printf("\n--Você conseguiu se curar--\n\n");
                         bot = bot + cura();
-                        character = character + random_heal();
+                        personagem = personagem + random_heal();
                         contador = contador - 1;
                     } else {
                         printf("\n| Você não tem mais curas... |\n");
@@ -175,37 +161,47 @@ void jogo() {
 
 // Função Rank com verificação de entrada
 void rank() {
-    int option;
+    int opcao;
 
     printf("\n -----------------\n"
            "|      RANK       |\n"
            "|                 |\n"
            "|   1 = WIN/DEAD  |\n"
-           "|   2 = EXIT      |\n"
+           "|   2 = SAIR      |\n"
            " -----------------\n"
-           "OPTION: ");
-    option = ler_inteiro();  // Usando a função de leitura para validar a entrada
+           "OPÇÃO: ");
+    opcao = ler_inteiro();
 
-    while (option < 1 || option > 2) {
+    while (opcao < 1 || opcao > 2) {
         printf("\n-------------------------------------------"
-               "\n!!ERRO:Você entrou com um caractere incorreto!!"
+               "\n!!ERRO: Você entrou com um caractere incorreto!!"
                "\n-------------------------------------------"
-               "\nOPTION: ");
-        option = ler_inteiro();  // Usando a função de leitura para validar a entrada
+               "\nOPÇÃO: ");
+        opcao = ler_inteiro();
     }
 
-    switch (option) {
+    switch (opcao) {
         case 1:
             printf("\n -----------------\n"
-                   "|    WIN / DEAD   |\n"
-                   "|                 |\n"
-                   "|   WIN = %d       |\n"
-                   "|   DEAD = %d      |\n"
-                   "|                 |\n"
-                   "|   2 = EXIT      |\n"
+                   "|   VITÓRIA / DERROTA |\n"
+                   "|                     |\n"
+                   "|   VITÓRIA = %d       |\n"
+                   "|   DERROTA = %d       |\n"
+                   "|                     |\n"
+                   "|   2 = SAIR          |\n"
                    " -----------------\n"
-                   "OPTION: ", win, dead);
-            option = ler_inteiro();  // Usando a função de leitura para validar a entrada
+                   "OPÇÃO: ", win, dead);
+            opcao = ler_inteiro();
+            while(opcao != 2){
+                        printf("\n-------------------------------------------"
+               "\n!!ERRO: Você entrou com um caractere incorreto!!"
+               "\n-------------------------------------------"
+               "\nOPÇÃO: ");
+        opcao = ler_inteiro();
+            }
+            if(opcao == 2){
+                menu();
+            }
             break;
 
         case 2:
@@ -216,62 +212,62 @@ void rank() {
 
 // Função Menu com verificação de entrada
 void menu() {
-    int option, exit_settings;
+    int opcao, sair_config;
 
     printf("\n -----------------\n"
-           "|    THE KING     |\n"
-           "|  Fighting Game  |\n"
-           "|     1 v 1       |\n"
+           "|    The King     |\n"
+           "|  Jogo de Luta   |\n"
+           "|     1 x 1       |\n"
            "|                 |\n"
-           "|   1 = NEW GAME  |\n"
-           "|   2 = SETTINGS  |\n"
+           "|   1 = NOVO JOGO |\n"
+           "|   2 = CONFIG    |\n"
            "|   3 = RANK      |\n"
-           "|   4 = EXIT      |\n"
+           "|   4 = SAIR      |\n"
            " -----------------\n"
-           "OPTION: ");
-    option = ler_inteiro();  // Usando a função de leitura para validar a entrada
+           "OPÇÃO: ");
+    opcao = ler_inteiro();
 
-    while (option < 1 || option > 4) {
+    while (opcao < 1 || opcao > 4) {
         printf("\n-------------------------------------------"
-               "\n!!ERRO:Você entrou com um caractere incorreto!!"
+               "\n!!ERRO: Você entrou com um caractere incorreto!!"
                "\n-------------------------------------------"
-               "\nOPTION: ");
-        option = ler_inteiro();  // Usando a função de leitura para validar a entrada
+               "\nOPÇÃO: ");
+        opcao = ler_inteiro();
     }
 
-    switch (option) {
+    switch (opcao) {
         case 1:
             srand(time(NULL));
             jogo();
             break;
 
         case 2:
-            printf("\n\n  -----SETTINGS-----\n"
-                   "|      BUTTONS:      |\n"
-                   "|     1  2  3  4     |\n"
-                   "|                    |\n"
-                   "|         rule:      |\n"
-                   "|                    |\n"
-                   "| 1-everyone always  |\n"
-                   "| makes the first    |\n"
-                   "| move.              |\n"
-                   "| 2-the bot will     |\n"
-                   "| always attack in   |\n"
-                   "| the same proportion|\n"
-                   " -------------------- \n"
-                   "| 3 = EXIT | OPTION: ");
-            exit_settings = ler_inteiro();  // Usando a função de leitura para validar a entrada
+            printf("\n\n  -----CONFIGURAÇÕES-----\n"
+                   "|      BOTÕES:           |\n"
+                   "|     1  2  3  4         |\n"
+                   "|                        |\n"
+                   "|         Regras:        |\n"
+                   "|                        |\n"
+                   "| 1-O jogador sempre     |\n"
+                   "| faz o primeiro         |\n"
+                   "| movimento.             |\n"
+                   "| 2-O bot atacará        |\n"
+                   "| sempre na mesma        |\n"
+                   "| proporção.             |\n"
+                   " -------------------------\n"
+                   "| 3 = SAIR | OPÇÃO: ");
+            sair_config = ler_inteiro();
 
-            if (exit_settings == 3) {
+            if (sair_config == 3) {
                 menu();
             } else {
-                while (exit_settings != 3) {
+                while (sair_config != 3) {
                     printf("\n-------------------------------------------"
-                           "\n!!ERRO:Você entrou com um caractere incorreto!!"
+                           "\n!!ERRO: Você entrou com um caractere incorreto!!"
                            "\n-------------------------------------------"
-                           "\nOPTION: ");
-                    exit_settings = ler_inteiro();  // Usando a função de leitura para validar a entrada
-                    if (exit_settings == 3) {
+                           "\nOPÇÃO: ");
+                    sair_config = ler_inteiro();
+                    if (sair_config == 3) {
                         menu();
                     }
                 }
@@ -288,13 +284,13 @@ void menu() {
 
         default:
             printf("\n-------------------------");
-            printf("\n!!ERRO:Você entrou com um caractere incorreto!!");
+            printf("\n!!ERRO: Você entrou com um caractere incorreto!!");
             printf("\n-------------------------");
             break;
     }
 }
 
-// Função main
+// Função principal
 int main() {
     menu();
     return 0;
