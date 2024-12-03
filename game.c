@@ -2,6 +2,17 @@
 #include <stdlib.h>
 #include <time.h>
 
+// Função auxiliar para garantir que o usuário digite apenas números inteiros
+int ler_inteiro() {
+    int valor;
+    while (scanf("%d", &valor) != 1) {  // Verifica se a leitura foi bem-sucedida
+        while(getchar() != '\n');  // Limpa o buffer de entrada
+        printf("Entrada inválida! Por favor, digite um número inteiro: ");
+    }
+    return valor;
+}
+
+
 // Function prototypes
 int random_ataque1();
 int random_ataque2();
@@ -23,9 +34,8 @@ int win = 0, dead = 0;
 
 //-----------------------------------------------
 
-// Function that creates a random attack, with
-// the values inside it; this function is for the
-// player. This character is the blacksmith!
+// Função para ataques aleatórios e cura (sem mudanças)
+
 int random_ataque1() {
     return rand() % 10 + 5;
 }
@@ -42,9 +52,7 @@ int random_heal() {
     return rand() % 30 + 11;
 }
 
-// Function that creates a random attack with
-// the values inside it; this function is for the
-// BOT. This character is the GAINT!
+// Função que cria ataques aleatórios para o BOT
 int faca() {
     return rand() % 10 + 5;
 }
@@ -61,19 +69,15 @@ int cura() {
     return rand() % 30 + 11;
 }
 
-// Game function
-// the fight takes place in this code
+// Função de Jogo com verificação de entradas
 void jogo() {
     int character = 100, bot = 100, contador = 2;
 
     printf("\n\n------------------\n");
-    printf("! Start the game !");
-    printf("\n------------------\n\n\n\n");
+    printf("! Start the game !\n");
+    printf("------------------\n\n\n\n");
 
-    // here he will choose which attack to use on the enemy and receive  
-    // but as long as one of the health points doesn't reach 0, it will keep repeating
     while (character > 0 && bot > 0) {
-
         if (character > 150 && bot > 150) {
             printf("\n\n  -----------------------------------------\n");
             printf("| Oops... your life is already at the limit. |\n");
@@ -91,8 +95,7 @@ void jogo() {
             printf("4 == Healing potion\n\n");
 
             printf("Choose: ");
-            int escolha;
-            scanf("%d", &escolha);
+            int escolha = ler_inteiro();  // Usando a função de leitura para validar a entrada
 
             switch (escolha) {
                 case 1:
@@ -157,18 +160,20 @@ void jogo() {
                         printf("\n--You managed to heal yourself--\n\n");
                         bot = bot + cura();
                         character = character + random_heal();
-
                         contador = contador - 1;
                     } else {
                         printf("\n| Você não tem mais curas... |\n");
                     }
                     break;
+
+                default:
+                    printf("Escolha inválida! Tente novamente.\n");
             }
         }
     }
 }
 
-// Rank
+// Função Rank com verificação de entrada
 void rank() {
     int option;
 
@@ -179,14 +184,14 @@ void rank() {
            "|   2 = EXIT      |\n"
            " -----------------\n"
            "OPTION: ");
-    scanf("%d", &option);
+    option = ler_inteiro();  // Usando a função de leitura para validar a entrada
 
     while (option < 1 || option > 2) {
         printf("\n-------------------------------------------"
-               "\n!!ERRO:You entered an incorrect character!!"
+               "\n!!ERRO:Você entrou com um caractere incorreto!!"
                "\n-------------------------------------------"
                "\nOPTION: ");
-        scanf("%d", &option);
+        option = ler_inteiro();  // Usando a função de leitura para validar a entrada
     }
 
     switch (option) {
@@ -200,8 +205,7 @@ void rank() {
                    "|   2 = EXIT      |\n"
                    " -----------------\n"
                    "OPTION: ", win, dead);
-            scanf("%d", &option);
-
+            option = ler_inteiro();  // Usando a função de leitura para validar a entrada
             break;
 
         case 2:
@@ -210,8 +214,7 @@ void rank() {
     }
 }
 
-// main game code  
-// menu, settings, and others
+// Função Menu com verificação de entrada
 void menu() {
     int option, exit_settings;
 
@@ -226,14 +229,14 @@ void menu() {
            "|   4 = EXIT      |\n"
            " -----------------\n"
            "OPTION: ");
-    scanf("%d", &option);
+    option = ler_inteiro();  // Usando a função de leitura para validar a entrada
 
-    while (option <= 0 || option >= 4) {
+    while (option < 1 || option > 4) {
         printf("\n-------------------------------------------"
-               "\n!!ERRO:You entered an incorrect character!!"
+               "\n!!ERRO:Você entrou com um caractere incorreto!!"
                "\n-------------------------------------------"
                "\nOPTION: ");
-        scanf("%d", &option);
+        option = ler_inteiro();  // Usando a função de leitura para validar a entrada
     }
 
     switch (option) {
@@ -257,17 +260,17 @@ void menu() {
                    "| the same proportion|\n"
                    " -------------------- \n"
                    "| 3 = EXIT | OPTION: ");
+            exit_settings = ler_inteiro();  // Usando a função de leitura para validar a entrada
 
-            scanf("%d", &exit_settings);
             if (exit_settings == 3) {
                 menu();
             } else {
                 while (exit_settings != 3) {
                     printf("\n-------------------------------------------"
-                           "\n!!ERRO:You entered an incorrect character!!"
+                           "\n!!ERRO:Você entrou com um caractere incorreto!!"
                            "\n-------------------------------------------"
                            "\nOPTION: ");
-                    scanf("%d", &exit_settings);
+                    exit_settings = ler_inteiro();  // Usando a função de leitura para validar a entrada
                     if (exit_settings == 3) {
                         menu();
                     }
@@ -285,18 +288,14 @@ void menu() {
 
         default:
             printf("\n-------------------------");
-            printf("\n!!ERRO:You entered an incorrect character!!");
+            printf("\n!!ERRO:Você entrou com um caractere incorreto!!");
             printf("\n-------------------------");
             break;
     }
 }
 
-// MAIN, or principal, is the main code
-// that calls the menu function to
-// initialize the game
+// Função main
 int main() {
-    int win = 0, dead = 0, total = 0;
-
     menu();
     return 0;
 }
